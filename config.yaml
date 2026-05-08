@@ -1,20 +1,24 @@
 # 锚点区
-Proxy_first: &Proxy_first {type: select, proxies: [节点选择, 香港节点, 新加坡节点, 日本节点, 台湾节点, 美国节点, 欧洲节点, 全部节点, 自建/家宽节点, 全球直连]}
+P: &P [节点选择, 香港节点, 新加坡节点, 日本节点, 台湾节点, 美国节点, 欧洲节点, 全部节点, 自建/家宽节点, 全球直连]
+D: &D [全球直连, 节点选择, 香港节点, 新加坡节点, 日本节点, 台湾节点, 美国节点, 欧洲节点, 全部节点, 自建/家宽节点]
 
-Direct_first: &Direct_first {type: select, proxies: [全球直连, 节点选择,  香港节点, 新加坡节点, 日本节点, 台湾节点, 美国节点, 欧洲节点, 全部节点, 自建/家宽节点]}
+Proxy_first: &Proxy_first {type: select, proxies: *P}
+Direct_first: &Direct_first {type: select, proxies: *D}
+Include_all: &Include_all {type: select, proxies: *P, include-all: true, exclude-filter: "(?i)(直连)"}
 
-Include_all: &Include_all {type: select, proxies: [节点选择, 香港节点, 新加坡节点, 日本节点, 台湾节点, 美国节点, 欧洲节点, 全部节点, 自建/家宽节点, 全球直连], include-all: true, exclude-filter: "(?i)(🟢 直连)"}
-
-Urltest_Base: &Urltest_Base {type: url-test, include-all: true, tolerance: 20, interval: 300, max-failed-times: 1, hidden: true}
+UrlTest_Base: &UrlTest_Base {type: url-test, include-all: true, tolerance: 20, interval: 300, max-failed-times: 1, hidden: true}
 
 PProviders: &PProviders {type: http, interval: 86400, health-check: {enable: true, url: "https://www.gstatic.com/generate_204", interval: 300}, filter: "^(?!.*(拒绝|直连|群|邀请|返利|循环|官网|客服|网站|网址|获取|订阅|流量|到期|机场|下次|版本|官址|备用|过期|已用|联系|邮箱|工单|贩卖|通知|倒卖|防止|国内|地址|频道|无法|说明|提示|特别|访问|支持|教程|关注|更新|作者|加入|USE|USED|TOTAL|EXPIRE|EMAIL|Panel|Channel|Author|traffic))"}
+
+f_hk: &f_hk "^(?=(?i)(hk))"
+f_sg: &f_sg "^(?=(?i)(sg))"
+f_jp: &f_jp "^(?=(?i)(jp))"
+f_tw: &f_tw "^(?=(?i)(tw))"
+f_us: &f_us "^(?=(?i)(us))"
 
 ##############################################
 
 proxy-providers:
-  proxy:
-    <<: *PProviders
-    
  
 ##############################################
 
@@ -136,77 +140,73 @@ dns:
     - https://dns.cloudflare.com/dns-query
 
 proxies: 
-  - name: "🟢 直连"
+  - name: "直连"
     type: direct
     udp: true
 
 
 # 策略组
 proxy-groups:
-  - {name: 节点选择, type: select, proxies: [香港节点, 新加坡节点, 日本节点, 台湾节点, 美国节点, 欧洲节点, 全部节点, 自建/家宽节点, 故障转移], icon: "https://pub-8feead0908f649a8b94397f152fb9cba.r2.dev/select.png"}
-  - {name: YouTube, <<: *Proxy_first, icon: "https://pub-8feead0908f649a8b94397f152fb9cba.r2.dev/youtube.png"}
-  - {name: FCM, <<: *Proxy_first, icon: "https://pub-8feead0908f649a8b94397f152fb9cba.r2.dev/fcm.png"}
-  - {name: GoogleVPN, <<: *Proxy_first, icon: "https://pub-8feead0908f649a8b94397f152fb9cba.r2.dev/googlevpn.png"}
-  - {name: Google, <<: *Proxy_first, icon: "https://pub-8feead0908f649a8b94397f152fb9cba.r2.dev/google.png"}
-  - {name: Meta, <<: *Proxy_first, icon: "https://pub-8feead0908f649a8b94397f152fb9cba.r2.dev/meta.png"}
-  - {name: AI, <<: *Include_all, icon: "https://pub-8feead0908f649a8b94397f152fb9cba.r2.dev/ai.png"}
-  - {name: GitHub, <<: *Proxy_first, icon: "https://pub-8feead0908f649a8b94397f152fb9cba.r2.dev/github.png"}
-  - {name: OneDrive, <<: *Proxy_first, icon: "https://pub-8feead0908f649a8b94397f152fb9cba.r2.dev/onedrive.png"}
-  - {name: Microsoft, <<: *Proxy_first, icon: "https://pub-8feead0908f649a8b94397f152fb9cba.r2.dev/microsoft.png"}
-  - {name: Telegram, <<: *Proxy_first, icon: "https://pub-8feead0908f649a8b94397f152fb9cba.r2.dev/telegram.png"}
-  - {name: Discord, <<: *Proxy_first, icon: "https://pub-8feead0908f649a8b94397f152fb9cba.r2.dev/discord.png"}
-  - {name: Talkatone, <<: *Proxy_first, icon: "https://pub-8feead0908f649a8b94397f152fb9cba.r2.dev/talkatone.png"}
-  - {name: LINE, <<: *Proxy_first, icon: "https://pub-8feead0908f649a8b94397f152fb9cba.r2.dev/line.png"}
-  - {name: Signal, <<: *Proxy_first, icon: "https://pub-8feead0908f649a8b94397f152fb9cba.r2.dev/signal.png"}
-  - {name: TikTok, <<: *Proxy_first, icon: "https://pub-8feead0908f649a8b94397f152fb9cba.r2.dev/tiktok.png"}
-  - {name: NETFLIX, <<: *Proxy_first, icon: "https://pub-8feead0908f649a8b94397f152fb9cba.r2.dev/netflix.png"}
-  - {name: DisneyPlus, <<: *Proxy_first, icon: "https://pub-8feead0908f649a8b94397f152fb9cba.r2.dev/disney.png"}
-  - {name: HBO, <<: *Proxy_first, icon: "https://pub-8feead0908f649a8b94397f152fb9cba.r2.dev/hbo.png"}
-  - {name: Primevideo, <<: *Proxy_first, icon: "https://pub-8feead0908f649a8b94397f152fb9cba.r2.dev/primevideo.png"}
-  - {name: AppleTV, <<: *Proxy_first, icon: "https://pub-8feead0908f649a8b94397f152fb9cba.r2.dev/appletv.png"}
-  - {name: Apple, type: select, <<: *Direct_first, icon: "https://pub-8feead0908f649a8b94397f152fb9cba.r2.dev/apple.png"}
-  - {name: Emby,type: select, <<: *Include_all, include-all: true, icon: "https://pub-8feead0908f649a8b94397f152fb9cba.r2.dev/emby.png"}
-  - {name: 哔哩哔哩, type: select, <<: *Direct_first, icon: "https://pub-8feead0908f649a8b94397f152fb9cba.r2.dev/bilibili.png"}
-  - {name: 哔哩东南亚, type: select, proxies: [节点选择, 新加坡节点, 全部节点, 自建/家宽节点, 全球直连], icon: "https://pub-8feead0908f649a8b94397f152fb9cba.r2.dev/bilibilit.png"}
-  - {name: 巴哈姆特, type: select, proxies: [台湾节点], icon: "https://pub-8feead0908f649a8b94397f152fb9cba.r2.dev/bahamut.png"}
-  - {name: Spotify, <<: *Proxy_first, icon: "https://pub-8feead0908f649a8b94397f152fb9cba.r2.dev/spotify.png"}
-  - {name: 国内媒体, type: select, <<: *Direct_first, icon: "https://pub-8feead0908f649a8b94397f152fb9cba.r2.dev/Chinese_media.png"}
-  - {name: Global-TV,type: select, <<: *Include_all, icon: "https://pub-8feead0908f649a8b94397f152fb9cba.r2.dev/global_tv.png"}
-  - {name: Global-Medial,type: select, <<: *Include_all, icon: "https://pub-8feead0908f649a8b94397f152fb9cba.r2.dev/global_media.png"}
-  - {name: 游戏平台, <<: *Proxy_first, icon: "https://pub-8feead0908f649a8b94397f152fb9cba.r2.dev/game.png"}
-  - {name: Speedtest,type: select, <<: *Include_all, icon: "https://pub-8feead0908f649a8b94397f152fb9cba.r2.dev/speedtest.png"}
-  - {name: PayPal, <<: *Proxy_first, icon: "https://pub-8feead0908f649a8b94397f152fb9cba.r2.dev/paypal.png"}
-  - {name: Wise, <<: *Proxy_first, icon: "https://pub-8feead0908f649a8b94397f152fb9cba.r2.dev/wise.png"}
-  - {name: 国外电商, <<: *Proxy_first, icon: "https://pub-8feead0908f649a8b94397f152fb9cba.r2.dev/shopping.png"}
-  - {name: STEAM,type: select, <<: *Include_all, icon: "https://pub-8feead0908f649a8b94397f152fb9cba.r2.dev/steam.png"}
-  - {name: 全球直连, type: select, proxies: [🟢 直连, 🔗 代理, 全部节点], icon: "https://pub-8feead0908f649a8b94397f152fb9cba.r2.dev/direct.png"}
-  - {name: 隐私拦截, type: select, proxies: [🚫 拒绝, ⚪ 丢弃 ,🟢 直连, 🔗 代理], icon: "https://pub-8feead0908f649a8b94397f152fb9cba.r2.dev/block.png"}
-  - {name: Final, type: select, <<: *Include_all,  icon: "https://pub-8feead0908f649a8b94397f152fb9cba.r2.dev/final.png"}
-  - {name: 自建/家宽节点, type: select, include-all: true, filter: "(?=.*(?i)(自建|CF|The_house|private|home|家宽|hgc|HKT|HKBN|icable|Hinet|att))", exclude-filter: "(?=.*(?i)(Seattle))", icon: "https://pub-8feead0908f649a8b94397f152fb9cba.r2.dev/private_node.png"}
-  - {name: 香港节点, type: select, proxies: [香港自动, 香港均衡], include-all: true, filter: "^(?=(?i)(hk))", icon: "https://pub-8feead0908f649a8b94397f152fb9cba.r2.dev/Hongkong.png"}
-  - {name: 新加坡节点, type: select, proxies: [新加坡自动, 新加坡均衡], include-all: true, filter: "^(?=(?i)(sg))", icon: "https://pub-8feead0908f649a8b94397f152fb9cba.r2.dev/Singapore.png"}
-  - {name: 日本节点, type: select, proxies: [日本自动, 日本均衡], include-all: true, filter: "^(?=(?i)(jp))", icon: "https://pub-8feead0908f649a8b94397f152fb9cba.r2.dev/Japan.png"}
-  - {name: 台湾节点, type: select, proxies: [台湾自动, 台湾均衡], include-all: true, filter: "^(?=(?i)(tw))", icon: "https://pub-8feead0908f649a8b94397f152fb9cba.r2.dev/Taiwan_China.png"}
-  - {name: 美国节点, type: select, proxies: [美国自动, 美国均衡], include-all: true, filter: "^(?=(?i)(us))" ,exclude-filter: "(?=.*(?i)(Australia|Russia|RUS))", icon: "https://pub-8feead0908f649a8b94397f152fb9cba.r2.dev/America.png"}
-  - {name: 欧洲节点, type: select, include-all: true, filter: "^(?=(?i)(al|ad|at|be|ba|bg|hr|cy|cz|dk|ee|fi|fr|de|gr|hu|is|ie|it|lv|li|lt|lu|mt|md|mc|me|nl|mk|no|pl|pt|ro|ru|sm|rs|sk|si|es|se|ch|ua|gb|va))", icon: "https://pub-8feead0908f649a8b94397f152fb9cba.r2.dev/European.png"}
-  - {name: 全部节点, type: select, include-all: true, tolerance: 20, interval: 300, exclude-filter: "(?i)(🟢 直连)", icon: "https://pub-8feead0908f649a8b94397f152fb9cba.r2.dev/all.png"}
-  - {name: 香港自动, <<: *Urltest_Base, filter: "^(?=(?i)(hk))" ,exclude-filter: "(?=.*(?i)(The_HK_automation|wcloud|0倍|0\\.1倍|0\\.01倍|0\\.3X|0\\.2x|0\\.5x|3X|2x|1\\.5x|traffic|plus))", icon: "https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/icon/hk_automatic_selection.png"}
-  - {name: 新加坡自动, <<: *Urltest_Base, filter: "^(?=(?i)(sg))" ,exclude-filter: "(?=.*(?i)(The_SG_automation|wcloud|0倍|0\\.1倍|0\\.01倍|0\\.3X|0\\.2x|0\\.5x|3X|2x|1\\.5x|traffic|plus|新西兰))", icon: "https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/icon/sg_automatic_selection.png"}
-  - {name: 日本自动, <<: *Urltest_Base, filter: "^(?=(?i)(jp))" ,exclude-filter: "(?=.*(?i)(The_JP_automation|wcloud|0倍|0\\.1倍|0\\.01倍|0\\.3X|0\\.2x|0\\.5x|3X|2x|1\\.5x|traffic|plus))", icon: "https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/icon/jp_automatic_selection.png"}
-  - {name: 台湾自动, <<: *Urltest_Base, filter: "^(?=(?i)(tw))" ,exclude-filter: "(?=.*(?i)(The_TW_automation|wcloud|0倍|0\\.1倍|0\\.01倍|0\\.3X|0\\.2x|0\\.5x|3X|2x|1\\.5x|traffic|plus))", icon: "https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/icon/tw_automatic_selection.png"}
-  - {name: 美国自动, <<: *Urltest_Base, filter: "^(?=(?i)(us))" ,exclude-filter: "(?=.*(?i)(The_US_automation|wcloud|0倍|0\\.1倍|0\\.01倍|0\\.3X|0\\.2x|0\\.5x|3X|2x|1\\.5x|russia|austria|plus|traffic|Australia|rus|aus))", icon: "https://raw.githubusercontent.com/Lanlan13-14/Rules/refs/heads/main/icon/usa_automatic_selection.png"}
-  - {name: 香港均衡, type: load-balance, include-all: true, strategy: consistent-hashing, hidden: true, filter: "^(?=(?i)(hk))" ,exclude-filter: "(?=.*(?i)(The_HK_balance|wcloud|0倍|0\\.1倍|0\\.01倍|0\\.3X|0\\.2x|0\\.5x|3X|2x|1\\.5x|traffic|plus))", icon: "https://pub-8feead0908f649a8b94397f152fb9cba.r2.dev/load-balance.png"}
-  - {name: 新加坡均衡, type: load-balance, include-all: true, strategy: consistent-hashing, hidden: true, filter: "^(?=(?i)(sg))" ,exclude-filter: "(?=.*(?i)(The_SG_balance|wcloud|0倍|0\\.1倍|0\\.01倍|0\\.3X|0\\.2x|0\\.5x|3X|2x|1\\.5x|traffic|plus|新西兰))", icon: "https://pub-8feead0908f649a8b94397f152fb9cba.r2.dev/load-balance.png"}
-  - {name: 日本均衡, type: load-balance, include-all: true, strategy: consistent-hashing, hidden: true, filter: "^(?=(?i)(jp))" ,exclude-filter: "(?=.*(?i)(The_JP_balance|wcloud|0倍|0\\.1倍|0\\.01倍|0\\.3X|0\\.2x|0\\.5x|3X|2x|1\\.5x|traffic|plus))", icon: "https://pub-8feead0908f649a8b94397f152fb9cba.r2.dev/load-balance.png"}
-  - {name: 台湾均衡, type: load-balance, include-all: true, strategy: consistent-hashing, hidden: true, filter: "^(?=(?i)(tw))" ,exclude-filter: "(?=.*(?i)(The_TW_balance|wcloud|0倍|0\\.1倍|0\\.01倍|0\\.3X|0\\.2x|0\\.5x|3X|2x|1\\.5x|traffic|plus))", icon: "https://pub-8feead0908f649a8b94397f152fb9cba.r2.dev/load-balance.png"}
-  - {name: 美国均衡, type: load-balance, include-all: true, strategy: consistent-hashing, hidden: true, filter: "^(?=(?i)(us))" ,exclude-filter: "(?=.*(?i)(The_US_balance|wcloud|0倍|0\\.1倍|0\\.01倍|0\\.3X|0\\.2x|0\\.5x|3X|2x|1\\.5x|russia|austria|plus|traffic|Australia|rus|aus))", icon: "https://pub-8feead0908f649a8b94397f152fb9cba.r2.dev/load-balance.png"}
+  - {name: 节点选择, type: select, proxies: [香港节点, 新加坡节点, 日本节点, 台湾节点, 美国节点, 欧洲节点, 全部节点, 自建/家宽节点, 故障转移]}
+  - {name: YouTube, <<: *Proxy_first}
+  - {name: FCM, <<: *Proxy_first}
+  - {name: GoogleVPN, <<: *Proxy_first}
+  - {name: Google, <<: *Proxy_first}
+  - {name: Meta, <<: *Proxy_first}
+  - {name: AI, <<: *Include_all}
+  - {name: GitHub, <<: *Proxy_first}
+  - {name: OneDrive, <<: *Proxy_first}
+  - {name: Microsoft, <<: *Proxy_first}
+  - {name: Telegram, <<: *Proxy_first}
+  - {name: Discord, <<: *Proxy_first}
+  - {name: Talkatone, <<: *Proxy_first}
+  - {name: LINE, <<: *Proxy_first}
+  - {name: Signal, <<: *Proxy_first}
+  - {name: TikTok, <<: *Proxy_first}
+  - {name: NETFLIX, <<: *Proxy_first}
+  - {name: DisneyPlus, <<: *Proxy_first}
+  - {name: HBO, <<: *Proxy_first}
+  - {name: Primevideo, <<: *Proxy_first}
+  - {name: AppleTV, <<: *Proxy_first}
+  - {name: Apple, <<: *Direct_first}
+  - {name: Emby, <<: *Include_all}
+  - {name: 哔哩哔哩, <<: *Direct_first}
+  - {name: 哔哩东南亚, type: select, proxies: [节点选择, 新加坡节点, 全部节点, 自建/家宽节点, 全球直连]}
+  - {name: 巴哈姆特, type: select, proxies: [台湾节点]}
+  - {name: Spotify, <<: *Proxy_first}
+  - {name: 国内媒体, <<: *Direct_first}
+  - {name: Global-TV, <<: *Include_all}
+  - {name: Global-Medial, <<: *Include_all}
+  - {name: 游戏平台, <<: *Proxy_first}
+  - {name: Speedtest, <<: *Include_all}
+  - {name: PayPal, <<: *Proxy_first}
+  - {name: Wise, <<: *Proxy_first}
+  - {name: 国外电商, <<: *Proxy_first}
+  - {name: STEAM, <<: *Include_all}
+  - {name: 全球直连, type: select, proxies: [直连, 代理, 全部节点]}
+  - {name: 隐私拦截, type: select, proxies: [拒绝, 丢弃, 直连, 代理]}
+  - {name: Final, <<: *Include_all}
+  - {name: 自建/家宽节点, type: select, include-all: true, filter: "(?=.*(?i)(自建|CF|The_house|private|home|家宽|hgc|HKT|HKBN|icable|Hinet|att))", exclude-filter: "(?=.*(?i)(Seattle))"}
+  - {name: 香港节点, type: select, proxies: [香港自动], include-all: true, filter: *f_hk}
+  - {name: 新加坡节点, type: select, proxies: [新加坡自动], include-all: true, filter: *f_sg}
+  - {name: 日本节点, type: select, proxies: [日本自动], include-all: true, filter: *f_jp}
+  - {name: 台湾节点, type: select, proxies: [台湾自动], include-all: true, filter: *f_tw}
+  - {name: 美国节点, type: select, proxies: [美国自动], include-all: true, filter: *f_us, exclude-filter: "(?i)(Australia|Russia|RUS)"}
+  - {name: 欧洲节点, type: select, include-all: true, filter: "^(?=(?i)(al|ad|at|be|ba|bg|hr|cy|cz|dk|ee|fi|fr|de|gr|hu|is|ie|it|lv|li|lt|lu|mt|md|mc|me|nl|mk|no|pl|pt|ro|ru|sm|rs|sk|si|es|se|ch|ua|gb|va))"}
+  - {name: 全部节点, type: select, include-all: true, tolerance: 20, interval: 300, exclude-filter: "(?i)(直连)"}
+  - {name: 香港自动, <<: *UrlTest_Base, filter: *f_hk}
+  - {name: 新加坡自动, <<: *UrlTest_Base, filter: *f_sg}
+  - {name: 日本自动, <<: *UrlTest_Base, filter: *f_jp}
+  - {name: 台湾自动, <<: *UrlTest_Base, filter: *f_tw}
+  - {name: 美国自动, <<: *UrlTest_Base, filter: *f_us}
 # 功能型代理组默认隐藏 start
-  - {name: 🔗 代理, type: select, hidden: true, proxies: [节点选择]}
-  - {name: 🚫 拒绝, type: select, hidden: true, proxies: [REJECT]}
-  - {name: ⚪ 丢弃, type: select, hidden: true, proxies: [REJECT-DROP]}
+  - {name: 代理, type: select, hidden: true, proxies: [节点选择]}
+  - {name: 拒绝, type: select, hidden: true, proxies: [REJECT]}
+  - {name: 丢弃, type: select, hidden: true, proxies: [REJECT-DROP]}
 # over
-  - {name: 故障转移, type: fallback, include-all: true, interval: 300, icon: "https://pub-8feead0908f649a8b94397f152fb9cba.r2.dev/fallback.png"}
-  - {name: GLOBAL, type: select, include-all: true , proxies: [节点选择, YouTube, GoogleVPN, FCM, Google, Meta, AI, GitHub, OneDrive, Microsoft, Telegram, Discord, Talkatone, LINE, Signal, TikTok, NETFLIX, DisneyPlus, HBO, Primevideo, AppleTV, Apple, Emby, 哔哩哔哩, 哔哩东南亚, 巴哈姆特, Spotify, 国内媒体, Global-TV, Global-Medial, 游戏平台, Speedtest, PayPal, Wise, 国外电商, STEAM, 全球直连, 隐私拦截, Final, 自建/家宽节点, 香港节点, 新加坡节点, 日本节点, 台湾节点, 美国节点, 欧洲节点, 全部节点, 香港自动, 新加坡自动, 日本自动, 台湾自动, 美国自动, 香港均衡, 新加坡均衡, 日本均衡, 台湾均衡, 美国均衡, 故障转移], exclude-filter: "(?i)(🟢 直连)", icon: "https://pub-8feead0908f649a8b94397f152fb9cba.r2.dev/global.png"}
+  - {name: 故障转移, type: fallback, include-all: true, interval: 300}
+  - {name: GLOBAL, type: select, include-all: true, proxies: [节点选择, YouTube, GoogleVPN, FCM, Google, Meta, AI, GitHub, OneDrive, Microsoft, Telegram, Discord, Talkatone, LINE, Signal, TikTok, NETFLIX, DisneyPlus, HBO, Primevideo, AppleTV, Apple, Emby, 哔哩哔哩, 哔哩东南亚, 巴哈姆特, Spotify, 国内媒体, Global-TV, Global-Medial, 游戏平台, Speedtest, PayPal, Wise, 国外电商, STEAM, 全球直连, 隐私拦截, Final, 自建/家宽节点, 香港节点, 新加坡节点, 日本节点, 台湾节点, 美国节点, 欧洲节点, 全部节点, 故障转移], exclude-filter: "(?i)(直连)"}
+
 rules: 
   - RULE-SET,banAd_domain,隐私拦截
   - RULE-SET,wechat_domain,全球直连
