@@ -148,51 +148,51 @@ proxies:
 # 策略组
 proxy-groups:
   - {name: 节点选择, type: select, proxies: [香港节点, 新加坡节点, 日本节点, 台湾节点, 美国节点, 欧洲节点, 全部节点, 自建/家宽节点, 故障转移]}
-  - {name: YouTube, <<: *Proxy_first}
-  - {name: FCM, <<: *Proxy_first}
-  - {name: GoogleVPN, <<: *Proxy_first}
-  - {name: Google, <<: *Proxy_first}
-  - {name: Meta, <<: *Proxy_first}
-  - {name: AI, <<: *Include_all}
-  - {name: GitHub, <<: *Proxy_first}
-  - {name: OneDrive, <<: *Proxy_first}
-  - {name: Microsoft, <<: *Proxy_first}
-  - {name: Telegram, <<: *Proxy_first}
-  - {name: Discord, <<: *Proxy_first}
+  - {name: YouTube, <<: *Proxy_first, icon: "https://cdn.jsdelivr.net/gh/Nixie24/nix24-mihomo-config/icons/youtube.svg"}
+  - {name: FCM, <<: *Proxy_first, icon: "https://cdn.jsdelivr.net/gh/Nixie24/nix24-mihomo-config/icons/firebase.svg"}
+  - {name: GoogleVPN, <<: *Proxy_first, icon: "https://cdn.jsdelivr.net/gh/Nixie24/nix24-mihomo-config/icons/google-cloud.svg"}
+  - {name: Google, <<: *Proxy_first, icon: "https://cdn.jsdelivr.net/gh/Nixie24/nix24-mihomo-config/icons/google.svg"}
+  - {name: Meta, <<: *Proxy_first, icon: "https://cdn.jsdelivr.net/gh/Nixie24/nix24-mihomo-config/icons/meta.svg"}
+  - {name: AI, <<: *Include_all, icon: "https://cdn.jsdelivr.net/gh/Nixie24/nix24-mihomo-config/icons/chatgpt.svg"}
+  - {name: GitHub, <<: *Proxy_first, icon: "https://cdn.jsdelivr.net/gh/Nixie24/nix24-mihomo-config/icons/github.svg"}
+  - {name: OneDrive, <<: *Proxy_first, icon: "https://cdn.jsdelivr.net/gh/Nixie24/nix24-mihomo-config/icons/microsoft-office.svg"}
+  - {name: Microsoft, <<: *Proxy_first, icon: "https://cdn.jsdelivr.net/gh/Nixie24/nix24-mihomo-config/icons/microsoft.svg"}
+  - {name: Telegram, <<: *Proxy_first, icon: "https://cdn.jsdelivr.net/gh/Nixie24/nix24-mihomo-config/icons/telegram.svg"}
+  - {name: Discord, <<: *Proxy_first, icon: "https://cdn.jsdelivr.net/gh/Nixie24/nix24-mihomo-config/icons/discord.svg"}
   - {name: Talkatone, <<: *Proxy_first}
-  - {name: LINE, <<: *Proxy_first}
-  - {name: Signal, <<: *Proxy_first}
-  - {name: TikTok, <<: *Proxy_first}
-  - {name: NETFLIX, <<: *Proxy_first}
-  - {name: DisneyPlus, <<: *Proxy_first}
-  - {name: HBO, <<: *Proxy_first}
-  - {name: Primevideo, <<: *Proxy_first}
-  - {name: AppleTV, <<: *Proxy_first}
-  - {name: Apple, <<: *Direct_first}
-  - {name: Emby, <<: *Include_all}
-  - {name: 哔哩哔哩, <<: *Direct_first}
-  - {name: 哔哩东南亚, type: select, proxies: [节点选择, 新加坡节点, 全部节点, 自建/家宽节点, 全球直连]}
-  - {name: 巴哈姆特, type: select, proxies: [台湾节点]}
-  - {name: Spotify, <<: *Proxy_first}
+  - {name: LINE, <<: *Proxy_first, icon: "https://cdn.jsdelivr.net/gh/Nixie24/nix24-mihomo-config/icons/line.svg"}
+  - {name: Signal, <<: *Proxy_first, icon: "https://cdn.jsdelivr.net/gh/Nixie24/nix24-mihomo-config/icons/signal.svg"}
+  - {name: TikTok, <<: *Proxy_first, icon: "https://cdn.jsdelivr.net/gh/Nixie24/nix24-mihomo-config/icons/tiktok.svg"}
+  - {name: NETFLIX, <<: *Proxy_first, icon: "https://cdn.jsdelivr.net/gh/Nixie24/nix24-mihomo-config/icons/netflix.svg"}
+  - {name: DisneyPlus, <<: *Proxy_first, icon: "https://cdn.jsdelivr.net/gh/Nixie24/nix24-mihomo-config/icons/disney+.svg"}
+  - {name: HBO, <<: *Proxy_first, icon: "https://cdn.jsdelivr.net/gh/Nixie24/nix24-mihomo-config/icons/hbo.svg"}
+  - {name: Primevideo, <<: *Proxy_first, icon: "https://cdn.jsdelivr.net/gh/Nixie24/nix24-mihomo-config/icons/primevideo.svg"}
+  - {name: AppleTV, <<: *Proxy_first, icon: "https://cdn.jsdelivr.net/gh/Nixie24/nix24-mihomo-config/icons/apple-tv.svg"}
+  - {name: Apple, <<: *Direct_first, icon: "https://cdn.jsdelivr.net/gh/Nixie24/nix24-mihomo-config/icons/apple.svg"}
+  - {name: Emby, <<: *Include_all, icon: "https://cdn.jsdelivr.net/gh/Nixie24/nix24-mihomo-config/icons/emby.svg"}
+  - {name: 哔哩哔哩, <<: *Direct_first, icon: "https://cdn.jsdelivr.net/gh/Nixie24/nix24-mihomo-config/icons/bilibili.svg"}
+  - {name: 哔哩东南亚, type: select, proxies: [节点选择, 新加坡节点, 全部节点, 自建/家宽节点, 全球直连], icon: "https://cdn.jsdelivr.net/gh/Nixie24/nix24-mihomo-config/icons/bilibili-global.svg"}
+  - {name: 巴哈姆特, type: select, proxies: [台湾节点], icon: "https://cdn.jsdelivr.net/gh/Nixie24/nix24-mihomo-config/icons/baha.svg"}
+  - {name: Spotify, <<: *Proxy_first, icon: "https://cdn.jsdelivr.net/gh/Nixie24/nix24-mihomo-config/icons/spotify.svg"}
   - {name: 国内媒体, <<: *Direct_first}
   - {name: Global-TV, <<: *Include_all}
   - {name: Global-Medial, <<: *Include_all}
   - {name: 游戏平台, <<: *Proxy_first}
-  - {name: Speedtest, <<: *Include_all}
-  - {name: PayPal, <<: *Proxy_first}
-  - {name: Wise, <<: *Proxy_first}
-  - {name: 国外电商, <<: *Proxy_first}
-  - {name: STEAM, <<: *Include_all}
-  - {name: 全球直连, type: select, proxies: [直连, 代理, 全部节点]}
-  - {name: 隐私拦截, type: select, proxies: [拒绝, 丢弃, 直连, 代理]}
+  - {name: Speedtest, <<: *Include_all, icon: "https://cdn.jsdelivr.net/gh/Nixie24/nix24-mihomo-config/icons/speedtest.svg"}
+  - {name: PayPal, <<: *Proxy_first, icon: "https://cdn.jsdelivr.net/gh/Nixie24/nix24-mihomo-config/icons/paypal.svg"}
+  - {name: Wise, <<: *Proxy_first, icon: "https://cdn.jsdelivr.net/gh/Nixie24/nix24-mihomo-config/icons/wise.svg"}
+  - {name: 国外电商, <<: *Proxy_first, icon: "https://cdn.jsdelivr.net/gh/Nixie24/nix24-mihomo-config/icons/ebay.svg"}
+  - {name: STEAM, <<: *Include_all, icon: "https://cdn.jsdelivr.net/gh/Nixie24/nix24-mihomo-config/icons/steam.svg"}
+  - {name: 全球直连, type: select, proxies: [直连, 代理, 全部节点], icon: "https://cdn.jsdelivr.net/gh/Nixie24/nix24-mihomo-config/icons/direct.svg"}
+  - {name: 隐私拦截, type: select, proxies: [拒绝, 丢弃, 直连, 代理], icon: "https://cdn.jsdelivr.net/gh/Nixie24/nix24-mihomo-config/icons/reject.svg"}
   - {name: Final, <<: *Include_all}
   - {name: 自建/家宽节点, type: select, include-all: true, filter: "(?=.*(?i)(自建|CF|The_house|private|home|家宽|hgc|HKT|HKBN|icable|Hinet|att))", exclude-filter: "(?=.*(?i)(Seattle))"}
-  - {name: 香港节点, type: select, proxies: [香港自动], include-all: true, filter: *f_hk}
-  - {name: 新加坡节点, type: select, proxies: [新加坡自动], include-all: true, filter: *f_sg}
-  - {name: 日本节点, type: select, proxies: [日本自动], include-all: true, filter: *f_jp}
-  - {name: 台湾节点, type: select, proxies: [台湾自动], include-all: true, filter: *f_tw}
-  - {name: 美国节点, type: select, proxies: [美国自动], include-all: true, filter: *f_us, exclude-filter: "(?i)(Australia|Russia|RUS)"}
-  - {name: 欧洲节点, type: select, include-all: true, filter: "^(?=(?i)(al|ad|at|be|ba|bg|hr|cy|cz|dk|ee|fi|fr|de|gr|hu|is|ie|it|lv|li|lt|lu|mt|md|mc|me|nl|mk|no|pl|pt|ro|ru|sm|rs|sk|si|es|se|ch|ua|gb|va))"}
+  - {name: 香港节点, type: select, proxies: [香港自动], include-all: true, filter: *f_hk, icon: "https://cdn.jsdelivr.net/gh/Nixie24/nix24-mihomo-config/icons/hk.svg"}
+  - {name: 新加坡节点, type: select, proxies: [新加坡自动], include-all: true, filter: *f_sg, icon: "https://cdn.jsdelivr.net/gh/Nixie24/nix24-mihomo-config/icons/sg.svg"}
+  - {name: 日本节点, type: select, proxies: [日本自动], include-all: true, filter: *f_jp, icon: "https://cdn.jsdelivr.net/gh/Nixie24/nix24-mihomo-config/icons/jp.svg"}
+  - {name: 台湾节点, type: select, proxies: [台湾自动], include-all: true, filter: *f_tw, icon: "https://cdn.jsdelivr.net/gh/Nixie24/nix24-mihomo-config/icons/tw.svg"}
+  - {name: 美国节点, type: select, proxies: [美国自动], include-all: true, filter: *f_us, exclude-filter: "(?i)(Australia|Russia|RUS)", icon: "https://cdn.jsdelivr.net/gh/Nixie24/nix24-mihomo-config/icons/us.svg"}
+  - {name: 欧洲节点, type: select, include-all: true, filter: "^(?=(?i)(al|ad|at|be|ba|bg|hr|cy|cz|dk|ee|fi|fr|de|gr|hu|is|ie|it|lv|li|lt|lu|mt|md|mc|me|nl|mk|no|pl|pt|ro|ru|sm|rs|sk|si|es|se|ch|ua|gb|va))", icon: "https://cdn.jsdelivr.net/gh/Nixie24/nix24-mihomo-config/icons/eu.svg"}
   - {name: 全部节点, type: select, include-all: true, tolerance: 20, interval: 300, exclude-filter: "(?i)(直连)"}
   - {name: 香港自动, <<: *UrlTest_Base, filter: *f_hk}
   - {name: 新加坡自动, <<: *UrlTest_Base, filter: *f_sg}
